@@ -7,7 +7,7 @@ services:
   - type: web
     name: aelvynor-backend
     runtime: python
-    plan: starter  # Options: free, starter, standard, pro
+    plan: free  # Free tier - no payment required
     region: oregon  # Options: oregon, frankfurt, singapore
     branch: main  # Branch to deploy from
     rootDir: backend  # Root directory for the service
@@ -31,7 +31,7 @@ services:
   - type: web
     name: aelvynor-frontend
     runtime: node
-    plan: starter  # Options: free, starter
+    plan: free  # Free tier - no payment required
     region: oregon
     branch: main
     rootDir: frontend
