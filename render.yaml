@@ -11,7 +11,7 @@ services:
     region: oregon  # Options: oregon, frankfurt, singapore
     branch: main  # Branch to deploy from
     rootDir: backend  # Root directory for the service
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
