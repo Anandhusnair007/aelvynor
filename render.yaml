@@ -15,7 +15,7 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        sync: false  # Set manually in Render dashboard
+        sync: false  # Set manually in Render dashboard after creating PostgreSQL
       - key: SECRET_KEY
         sync: false  # Set manually in Render dashboard
       - key: CORS_ORIGINS
@@ -47,11 +47,3 @@ services:
           property: host  # Automatically uses backend service URL
     healthCheckPath: /
     autoDeploy: true
-
-  # PostgreSQL Database
-  - type: pg
-    name: aelvynor-db
-    plan: starter  # Options: starter, standard, pro
-    region: oregon
-    databaseName: aelvynor
-    databaseUser: aelvynor_user
