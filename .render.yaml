@@ -1,0 +1,91 @@
+# Render Infrastructure as Code
+# Deploys both backend and frontend services automatically from GitHub
+# https://render.com/docs/infrastructure-as-code
+
+services:
+  # Backend API Service
+  - type: web
+    name: aelvynor-backend
+    runtime: python
+    plan: starter  # Options: free, starter, standard, pro
+    region: oregon  # Options: oregon, frankfurt, singapore
+    branch: main  # Branch to deploy from
+    rootDir: backend  # Root directory for the service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # Set manually in Render dashboard
+      - key: SECRET_KEY
+        sync: false  # Set manually in Render dashboard
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD_HASH
+        sync: false  # Set manually in Render dashboard
+      - key: CORS_ORIGINS
+        value: https://aelvynor-frontend.onrender.com,http://localhost:3000
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+    healthCheckPath: /health
+    autoDeploy: true  # Auto-deploy on push to main branch
+
+  # Frontend Static Site (Next.js)
+  # Note: Next.js 14 works best on Vercel. For Render, use static export or web service.
+  # Option A: Static Site (requires next.config.js with output: 'export')
+  # Option B: Web Service (recommended for Next.js 14 on Render)
+  - type: web
+    name: aelvynor-frontend
+    runtime: node
+    plan: starter  # Options: free, starter
+    region: oregon
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: aelvynor-backend
+          property: host  # Automatically uses backend service URL
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: aelvynor-backend
+          property: host  # Automatically uses backend service URL
+      - key: NODE_ENV
+        value: production
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+    autoDeploy: true
+
+  # PostgreSQL Database (optional - uncomment if using Render managed DB)
+  # - type: pspg
+  #   name: aelvynor-db
+  #   plan: starter  # Options: starter, standard, pro
+  #   region: oregon
+  #   databaseName: aelvynor
+  #   databaseUser: aelvynor_user
+  #   ipAllowList: []  # Allow all IPs (or specify specific IPs)
+

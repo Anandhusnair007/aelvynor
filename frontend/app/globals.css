@@ -1,0 +1,80 @@
+/**
+ * Global CSS styles
+ * Tailwind CSS directives and custom styles
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-purple-400;
+  }
+}
+
+@layer utilities {
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* GPU-accelerated transforms for performance */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Optimized backdrop blur for mobile */
+  @supports (backdrop-filter: blur(1px)) {
+    .backdrop-blur-optimized {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+  }
+}
+
+/* Performance optimizations for animations */
+@layer components {
+
+  /* Ensure smooth animations on mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-smooth {
+      animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+
+    .animate-smooth,
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

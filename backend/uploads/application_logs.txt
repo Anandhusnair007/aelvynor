@@ -1,0 +1,30 @@
+[EMAIL NOTIFICATION] Application #1 received from John Doe (john@example.com)
+  - Application ID: 1
+  - Applicant: John Doe
+  - Email: john@example.com
+  - Timestamp: 2025-12-03T22:06:03.021843
+  - Action: Send confirmation email to applicant
+[EMAIL NOTIFICATION] Application #2 received from John Doe (john@example.com)
+  - Application ID: 2
+  - Applicant: John Doe
+  - Email: john@example.com
+  - Timestamp: 2025-12-03T22:06:03.665172
+  - Action: Send confirmation email to applicant
+[EMAIL NOTIFICATION] Application #3 received from Jane Smith (jane@example.com)
+  - Application ID: 3
+  - Applicant: Jane Smith
+  - Email: jane@example.com
+  - Timestamp: 2025-12-03T22:06:13.222338
+  - Action: Send confirmation email to applicant
+[EMAIL NOTIFICATION] Application #4 received from Test User (test@example.com)
+  - Application ID: 4
+  - Applicant: Test User
+  - Email: test@example.com
+  - Timestamp: 2025-12-03T22:06:17.026773
+  - Action: Send confirmation email to applicant
+[EMAIL NOTIFICATION] Application #5 received from Test User (test@example.com)
+  - Application ID: 5
+  - Applicant: Test User
+  - Email: test@example.com
+  - Timestamp: 2025-12-03T22:58:22.296179
+  - Action: Send confirmation email to applicant
