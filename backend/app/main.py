@@ -7,10 +7,10 @@ import os
 
 app = FastAPI(title="Aelvynor API")
 
-# CORS
+# CORS - Use environment variable or default to localhost
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,3 +36,7 @@ app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 @app.get("/")
 def root():
     return {"message": "Welcome to Aelvynor API"}
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "healthy", "service": "aelvynor-backend"}
