@@ -49,7 +49,7 @@ services:
     autoDeploy: true
 
   # PostgreSQL Database
-  - type: pspg
+  - type: pg
     name: aelvynor-db
     plan: starter  # Options: starter, standard, pro
     region: oregon
